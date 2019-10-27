@@ -7,24 +7,46 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Page.DataContext>
+        <local:MainViewModel/>
+    </Page.DataContext>
 
+
+    <StackPanel Orientation="Horizontal">
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Node IP:" Width="100" FontSize="22"></TextBlock>
-            <TextBox Width="250" Description="Adress of node ie. '0.0.0.0:1234'"></TextBox>
+            <TextBox Width="250" Text="{Binding Uri, Mode=TwoWay}" Description="Adress of node ie. '0.0.0.0:1234'"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="User ID:" Width="100" FontSize="22"></TextBlock>
-            <TextBox Width="250" Description="User ID to be included with transaction"></TextBox>
+            <TextBox Width="250" Text="{Binding Message.sender, Mode=TwoWay}" Description="User ID to be included with transaction"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Message:" Width="100" FontSize="22"></TextBlock>
-            <TextBox Width="500" Height="250"></TextBox>
+            <TextBox Width="500" Height="250" Text="{Binding Message.data, Mode=TwoWay}"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Get nodes"></Button>
-            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Send transaction"></Button>
+            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Get nodes" Command="{Binding GetNodesCommand}"></Button>
+            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Send message" Command="{Binding PostMessageCommand}"></Button>
             <Button Margin="20,20,20,20" Height="50" Width="150" Content="Mine next block"></Button>
+            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Get all messages" Command="{Binding GetChainCommand}"></Button>
+            </StackPanel>
+        <ListView ItemsSource="{Binding Nodes.peers}"></ListView>
+    </StackPanel>
+    <StackPanel Orientation="Vertical">
+        <ListView ItemsSource="{Binding AllMessages}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding sender}"></TextBlock>
+                        <TextBlock Text=" :  "></TextBlock>
+                        <TextBlock Text="{Binding data}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         </StackPanel>
     </StackPanel>
 </Page>
