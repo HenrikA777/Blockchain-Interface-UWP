@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Blockchain_Interface_UWP.Annotations;
 
 namespace Blockchain_Interface_UWP
@@ -27,7 +28,13 @@ namespace Blockchain_Interface_UWP
                                                           Chain = _nodeHandler.GetChain(_uri).Result;
                                                           OnPropertyChanged(nameof(AllMessages));
                                                       }));
-            PostMessageCommand = new RelayCommand<bool>((() => _nodeHandler.PostMessage(_uri, Message)));
+            PostMessageCommand = new RelayCommand<bool>((() =>
+                                                         {
+                                                             _nodeHandler.PostMessage(_uri, Message);
+                                                             Message.data = "";
+                                                             OnPropertyChanged(nameof(Message));
+                                                         }));
+            MineCommand = new RelayCommand<bool>((() => _nodeHandler.Mine(_uri)));
         }
 
 
@@ -91,6 +98,7 @@ namespace Blockchain_Interface_UWP
         public RelayCommand<bool> GetNodesCommand { get; }
         public RelayCommand<bool> GetChainCommand { get; }
         public RelayCommand<bool> PostMessageCommand { get; }
+        public RelayCommand<bool> MineCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

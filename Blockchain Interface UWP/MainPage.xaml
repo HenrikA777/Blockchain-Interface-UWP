@@ -30,7 +30,7 @@
         <StackPanel Orientation="Horizontal">
             <Button Margin="20,20,20,20" Height="50" Width="150" Content="Get nodes" Command="{Binding GetNodesCommand}"></Button>
             <Button Margin="20,20,20,20" Height="50" Width="150" Content="Send message" Command="{Binding PostMessageCommand}"></Button>
-            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Mine next block"></Button>
+            <Button Margin="20,20,20,20" Height="50" Width="150" Content="Mine next block" Command="{Binding MineCommand}"></Button>
             <Button Margin="20,20,20,20" Height="50" Width="150" Content="Get all messages" Command="{Binding GetChainCommand}"></Button>
             </StackPanel>
         <ListView ItemsSource="{Binding Nodes.peers}"></ListView>

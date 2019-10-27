@@ -63,6 +63,24 @@ namespace Blockchain_Interface_UWP
                 throw e;
             }
         }
+        public async void Mine(string uri)
+        {
+            uri = uri + "/mine";
+            try
+            {
+                HttpResponseMessage response = Client.GetAsync(uri).Result;
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseBody);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                throw e;
+            }
+        }
 
         public void PostMessage(string uri, Message message)
         {
